@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 
 public class lcs {
-	private int[][] D; 
-	private int[][] via;//0=diagonal 1=left 2=up
+	private static int[][] D; 
+	private static int[][] via;//0=diagonal 1=left 2=up
 	private static ArrayList<Integer> leftLCS = new ArrayList<Integer>();
 	private static ArrayList<Integer> rightLCS = new ArrayList<Integer>();
+	private static int lcsSize;
 	
 	public static int getLeftLCS(int i) {
 		return leftLCS.get(i);
@@ -16,14 +17,40 @@ public class lcs {
 		return rightLCS.get(i);
 	}
 	
-	public void findLcs(Paragraph left,Paragraph right){
-		D = new int[left.line+1][right.line+1];
-		via = new int[left.line+1][right.line+1];
+	private static void setLeftLCS(int i) {
+		leftLCS.add(0, i);
+	}
+	private static void setRightLCS(int i) {
+		rightLCS.add(0, i);
+	}
+	
+	public static int getLcsSize() {
+		return lcsSize;
+	}
+	
+	public static int getSizeOfLeftLCS() {
+		return leftLCS.size();
+	}
+	public static int getSizeOfRightLCS() {
+		return rightLCS.size();
+	}
+	
+	public static void findLcs(ArrayList<String> left,ArrayList<String> right){
+		D = new int[left.size()+1][right.size()+1];
+		via = new int[left.size()+1][right.size()+1];
 		int i,j = 0;
 		
-		for(i=1;i<=left.line+1;i++){
-			for(j=1;j<=right.line+1;j++){
-				if(left.getSeq(i).equals(right.getSeq(i))) {
+		for(i = 0; i <= left.size(); i++) {
+			D[i][0] = 0;
+		}
+		
+		for(i = 0; i <= right.size(); i++) {
+			D[0][i] = 0;
+		}
+		
+		for(i=1;i<left.size()+1;i++){
+			for(j=1;j<right.size()+1;j++){
+				if(left.get(i-1).equals(right.get(i-1))) {
 					D[i][j] = D[i-1][j-1] + 1;
 					via[i][j] = 0;
 				}
@@ -41,7 +68,8 @@ public class lcs {
 		j--;
 		while(i!=0 && j!=0){
 			if(via[i][j] == 0){
-		//		LCS.seq.add(1, left.seq.get(i));
+				lcs.setLeftLCS(i-1);
+				lcs.setRightLCS(j-1);
 				i--;j--;
 			}
 			else if(via[i][j] == 1){
@@ -52,9 +80,6 @@ public class lcs {
 			}
 			
 		}
-		
-		
+		lcsSize = leftLCS.size();
 	}
-	
-	
 }

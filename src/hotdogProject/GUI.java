@@ -33,7 +33,7 @@ public class GUI extends JFrame {
    private Button rightsave = new Button("SAVE");
    private Button copyToRight = new Button("-->");
    private Button copyToleft = new Button("<--");
-   private Button compare = new Button("COMPARE");
+   private Button compareButton = new Button("compareButton");
    private JPanel rightText = new JPanel();
    private JPanel leftText = new JPanel();
    private static JTextPane rightPane = new JTextPane();
@@ -91,7 +91,7 @@ public class GUI extends JFrame {
       leftScroll.setBounds(50,80,450,550);
       copyToleft.setBounds(550, 150, 100, 50);
       copyToRight.setBounds(550, 350, 100, 50);
-      compare.setBounds(550, 250, 100, 50);
+      compareButton.setBounds(550, 250, 100, 50);
       
       leftedit.setBounds(200, 20, 150, 40);
       leftsave.setBounds(350, 20, 150, 40);
@@ -256,18 +256,21 @@ public class GUI extends JFrame {
     	  }
       });
       
-      compare.addMouseListener(new MouseAdapter() {
+      compareButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  compare.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  compareButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  compare.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  compareButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  }
     	  public void mousePressed(MouseEvent e) {
+    		  System.out.println("Pressed");
+    		  compare.compareCode();
+    		  System.out.println("Exited");
     	  }
       });
       copyToRight.addMouseListener(new MouseAdapter() {
@@ -312,7 +315,7 @@ public class GUI extends JFrame {
       add(copyToRight);
       add(rightScroll);
       add(leftScroll);
-      add(compare);
+      add(compareButton);
    }
    
 	public static String getLeftPanelText() {
