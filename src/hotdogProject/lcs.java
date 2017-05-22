@@ -28,14 +28,9 @@ public class lcs {
 		return lcsSize;
 	}
 	
-	public static int getSizeOfLeftLCS() {
-		return leftLCS.size();
-	}
-	public static int getSizeOfRightLCS() {
-		return rightLCS.size();
-	}
-	
 	public static void findLcs(ArrayList<String> left,ArrayList<String> right){
+		leftLCS.clear();
+		rightLCS.clear();
 		D = new int[left.size()+1][right.size()+1];
 		via = new int[left.size()+1][right.size()+1];
 		int i,j = 0;
@@ -83,13 +78,14 @@ public class lcs {
 		lcsSize = leftLCS.size();
 		
 		System.out.println("left");
-		for(i = 0; i < lcs.leftLCS.size(); i++) {
+		for(i = 0; i < lcsSize; i++) {
 			System.out.println(lcs.getLeftLCS(i));
 		}
 		
 		System.out.println("right");
-		for(i = 0; i < lcs.rightLCS.size(); i++) {
+		for(i = 0; i < lcs.lcsSize; i++) {
 			System.out.println(lcs.getRightLCS(i));
 		}
+		
 	}
 }
