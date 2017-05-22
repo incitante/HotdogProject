@@ -277,30 +277,30 @@ public class GUI extends JFrame {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  copyToRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  copyToRight.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
-    		  Merge.mergeToRight(leftPane,rightPane);
+    		  Merge.merge(rightPane,leftPane);
     	  }
       });
       copyToleft.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
-    		  Merge.mergeToLeft(leftPane,rightPane);
+    		  Merge.merge(leftPane,rightPane);
     	  }
       });
       add(leftload);
