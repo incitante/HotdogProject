@@ -1,3 +1,5 @@
+package hotdogProject;
+
 import javax.swing.JTextPane;
 
 public class Merge {
