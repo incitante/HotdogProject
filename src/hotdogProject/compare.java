@@ -34,7 +34,7 @@ public class compare {
 	}
 
 	public static void compareCode() {
-		int k, i, j, t, limitK, limitI, limitJ;
+		int k, i, j, t, limitK, limitI, limitJ, Line;
 		int sw;
 		ArrayList<String> left, right;
 		
@@ -46,7 +46,7 @@ public class compare {
 
 		lcs.findLcs(left, right);
 
-		k = i = j = 0;
+		k = i = j = Line = 0;
 		t = -1;
 		sw = -1;
 
@@ -59,10 +59,18 @@ public class compare {
 		while (k < limitK) {
 			if (lcs.getLeftLCS(k) == i && lcs.getRightLCS(k) == j) {
 				if (sw != 0) {
+					if(t != -1) {
+						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+					}
 					sw = 0;
 					t++;
 					ParagraphList.leftParagraphList.add(new Paragraph());
 					ParagraphList.rightParagraphList.add(new Paragraph());
+					ParagraphList.leftParagraphList.get(t).startLine = Line;
+					ParagraphList.rightParagraphList.get(t).startLine = Line;
+					ParagraphList.leftParagraphList.get(t).isLCS = true;
+					ParagraphList.rightParagraphList.get(t).isLCS = true;
 				}
 				ParagraphList.leftParagraphList.get(t).setSeq(left.get(i));
 				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
@@ -71,59 +79,94 @@ public class compare {
 				j++;
 			} else if (lcs.getLeftLCS(k) == i && lcs.getRightLCS(k) != j) {
 				if (sw != 1) {
+					if(t != -1) {
+						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+					}
 					sw = 1;
 					t++;
 					ParagraphList.leftParagraphList.add(new Paragraph());
 					ParagraphList.rightParagraphList.add(new Paragraph());
+					ParagraphList.leftParagraphList.get(t).startLine = Line;
+					ParagraphList.rightParagraphList.get(t).startLine = Line;
+					ParagraphList.leftParagraphList.get(t).isLCS = false;
+					ParagraphList.rightParagraphList.get(t).isLCS = false;
 				}
 				ParagraphList.leftParagraphList.get(t).setSeq("");
 				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
 				j++;
 			} else {
 				if (sw != 2) {
+					if(t != -1) {
+						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+					}
 					sw = 2;
 					t++;
 					ParagraphList.leftParagraphList.add(new Paragraph());
 					ParagraphList.rightParagraphList.add(new Paragraph());
+					ParagraphList.leftParagraphList.get(t).startLine = Line;
+					ParagraphList.rightParagraphList.get(t).startLine = Line;
+					ParagraphList.leftParagraphList.get(t).isLCS = false;
+					ParagraphList.rightParagraphList.get(t).isLCS = false;
 				}
 				ParagraphList.leftParagraphList.get(t).setSeq(left.get(i));
 				ParagraphList.rightParagraphList.get(t).setSeq("");
 				i++;
 			}
+			Line++;
 		}
 
 		if (i < limitI) {
+			if(t != -1) {
+				ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+				ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+			}
+			t++;
 			ParagraphList.leftParagraphList.add(new Paragraph());
 			ParagraphList.rightParagraphList.add(new Paragraph());
-			t++;
+			ParagraphList.leftParagraphList.get(t).startLine = Line;
+			ParagraphList.rightParagraphList.get(t).startLine = Line;
+			ParagraphList.leftParagraphList.get(t).isLCS = false;
+			ParagraphList.rightParagraphList.get(t).isLCS = false;
 			while (i < limitI) {
 				ParagraphList.leftParagraphList.get(t).setSeq(left.get(i));
 				ParagraphList.rightParagraphList.get(t).setSeq("");
 				i++;
+				Line++;
 			}
 		}
 
 		if (j < limitJ) {
+			if(t != -1) {
+				ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+				ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+			}
+			t++;
 			ParagraphList.leftParagraphList.add(new Paragraph());
 			ParagraphList.rightParagraphList.add(new Paragraph());
-			t++;
+			ParagraphList.leftParagraphList.get(t).startLine = Line;
+			ParagraphList.rightParagraphList.get(t).startLine = Line;
+			ParagraphList.leftParagraphList.get(t).isLCS = false;
+			ParagraphList.rightParagraphList.get(t).isLCS = false;
 			while (j < limitJ) {
 				ParagraphList.leftParagraphList.get(t).setSeq("");
 				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
 				j++;
+				Line++;
 			}
 		}
+		
+		ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+		ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+		
 		System.out.println("left");
 		for (i = 0; i <= t; i++) {
-			for (j = 0; j < ParagraphList.leftParagraphList.get(i).getSize(); j++) {
-				System.out.println(ParagraphList.leftParagraphList.get(i).getSeq(j));
-			}
+			System.out.println(ParagraphList.leftParagraphList.get(i).startLine + " " + ParagraphList.leftParagraphList.get(i).endLine);
 		}
 		System.out.println("right");
 		for (i = 0; i <= t; i++) {
-			for (j = 0; j < ParagraphList.rightParagraphList.get(i).getSize(); j++) {
-				System.out.println(ParagraphList.rightParagraphList.get(i).getSeq(j));
-			}
+			System.out.println(ParagraphList.rightParagraphList.get(i).startLine + " " + ParagraphList.rightParagraphList.get(i).endLine);
 		}
 	}
 }
