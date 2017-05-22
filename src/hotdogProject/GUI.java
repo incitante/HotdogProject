@@ -25,15 +25,16 @@ import javax.swing.JTextPane;
  
 public class GUI extends JFrame {
  
-   private Button leftedit = new Button("EDIT");
-   private Button leftload = new Button("LOAD"); 
-   private Button leftsave = new Button("SAVE");
-   private Button rightedit = new Button("EDIT");
-   private Button rightload = new Button("LOAD"); 
-   private Button rightsave = new Button("SAVE");
-   private Button copyToRight = new Button("-->");
-   private Button copyToleft = new Button("<--");
-   private Button compare = new Button("COMPARE");
+   private Button leftEditButton = new Button("EDIT");
+   //private ImageButton leftEditButton = new ImageButton("emil.png", "emil1.png"); //Example for Changing button into image button
+   private Button leftLoadButton = new Button("LOAD"); 
+   private Button leftSaveButton = new Button("SAVE");
+   private Button rightEditButton = new Button("EDIT");
+   private Button rightLoadButton = new Button("LOAD"); 
+   private Button rightSaveButton = new Button("SAVE");
+   private Button copyToRightButton = new Button("-->");
+   private Button copyToLeftButton = new Button("<--");
+   private Button compareButton = new Button("COMPARE");
    private JPanel rightText = new JPanel();
    private JPanel leftText = new JPanel();
    private static JTextPane rightPane = new JTextPane();
@@ -89,30 +90,30 @@ public class GUI extends JFrame {
       
       rightScroll.setBounds(700,80,450,550);
       leftScroll.setBounds(50,80,450,550);
-      copyToleft.setBounds(550, 150, 100, 50);
-      copyToRight.setBounds(550, 350, 100, 50);
-      compare.setBounds(550, 250, 100, 50);
+      copyToLeftButton.setBounds(550, 150, 100, 50);
+      copyToRightButton.setBounds(550, 350, 100, 50);
+      compareButton.setBounds(550, 250, 100, 50);
       
-      leftedit.setBounds(200, 20, 150, 40);
-      leftsave.setBounds(350, 20, 150, 40);
-      leftload.setBounds(50, 20, 150, 40);
+      leftEditButton.setBounds(200, 20, 150, 40);
+      leftSaveButton.setBounds(350, 20, 150, 40);
+      leftLoadButton.setBounds(50, 20, 150, 40);
       
-      rightedit.setBounds(850, 20, 150, 40);
-      rightsave.setBounds(1000, 20, 150, 40);
-      rightload.setBounds(700, 20, 150, 40);
+      rightEditButton.setBounds(850, 20, 150, 40);
+      rightSaveButton.setBounds(1000, 20, 150, 40);
+      rightLoadButton.setBounds(700, 20, 150, 40);
       ffd.setSize(300,200);
       fmd.setSize(100,50);
       
-      leftload.addMouseListener(new MouseAdapter() {
+      leftLoadButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftload.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  leftLoadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftload.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  leftLoadButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  }
       	     	  
     	  @Override
@@ -140,16 +141,16 @@ public class GUI extends JFrame {
     	  }
       });
       
-      leftedit.addMouseListener(new MouseAdapter() {
+      leftEditButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  leftEditButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  leftEditButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
     		  //마우스 나갈시
@@ -157,16 +158,16 @@ public class GUI extends JFrame {
     	  }
       });
       
-      leftsave.addMouseListener(new MouseAdapter() {
+      leftSaveButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  leftSaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  leftSaveButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
     		  try {
@@ -181,16 +182,16 @@ public class GUI extends JFrame {
     	  }
       });
       
-      rightload.addMouseListener(new MouseAdapter() {
+      rightLoadButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  rightload.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  rightLoadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  rightload.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  rightLoadButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  }
     	  public void mousePressed(MouseEvent e) {
     		  FileDialog dialog = new FileDialog(ffd, "Browser for Load", FileDialog.LOAD);
@@ -216,32 +217,32 @@ public class GUI extends JFrame {
     	  }    	  
       });
       
-      rightedit.addMouseListener(new MouseAdapter() {
+      rightEditButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  rightedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  rightEditButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  rightedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  rightEditButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
     		  rightEditText();
     	  }
       });
       
-      rightsave.addMouseListener(new MouseAdapter() {
+      rightSaveButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  rightsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  rightSaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  rightsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  rightSaveButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
     		  try {
@@ -256,63 +257,63 @@ public class GUI extends JFrame {
     	  }
       });
       
-      compare.addMouseListener(new MouseAdapter() {
+      compareButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  compare.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  compareButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  compare.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  compareButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  }
     	  public void mousePressed(MouseEvent e) {
     	  }
       });
-      copyToRight.addMouseListener(new MouseAdapter() {
+      copyToRightButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  copyToRightButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  copyToRightButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
-    		  Merge.mergeToRight(leftPane,rightPane);
+    		 // Merge.mergeToRight(leftPane,rightPane);
     	  }
       });
-      copyToleft.addMouseListener(new MouseAdapter() {
+      copyToLeftButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseEntered(MouseEvent e) {
     		  //마우스 진입시
-    		  leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    		  copyToLeftButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     	  }
     	  @Override
     	  public void mouseExited(MouseEvent e) {
     		  //마우스 나갈시
-    		  leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    		  copyToLeftButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     	  } @Override
     	  public void mousePressed(MouseEvent e) {
-    		  Merge.mergeToLeft(leftPane,rightPane);
+    		 // Merge.mergeToLeft(leftPane,rightPane);
     	  }
       });
-      add(leftload);
-      add(leftedit);
-      add(leftsave);
+      add(leftLoadButton);
+      add(leftEditButton);
+      add(leftSaveButton);
       
-      add(rightload);
-      add(rightedit);
-      add(rightsave);
+      add(rightLoadButton);
+      add(rightEditButton);
+      add(rightSaveButton);
       
-      add(copyToleft);
-      add(copyToRight);
+      add(copyToLeftButton);
+      add(copyToRightButton);
       add(rightScroll);
       add(leftScroll);
-      add(compare);
+      add(compareButton);
    }
    
 	public static String getLeftPanelText() {
@@ -344,5 +345,8 @@ public class GUI extends JFrame {
          leftPane.setEditable(false);
          leftPane.setBackground(Color.LIGHT_GRAY);
       }
+   }
+   public static void main(String[] args) {
+	   GUI g = new GUI();
    }
 }
