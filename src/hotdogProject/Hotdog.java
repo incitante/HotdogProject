@@ -1,47 +1,52 @@
 package hotdogProject;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 
 public class Hotdog extends JFrame {
 
-	private Button leftedit = new Button("EDIT");
-	private Button leftload = new Button("LOAD");
-	private Button leftsave = new Button("SAVE");
-	private Button rightedit = new Button("EDIT");
-	private Button rightload = new Button("LOAD");
-	private Button rightsave = new Button("SAVE");
-	private Button copyToRight = new Button("-->");
-	private Button copyToleft = new Button("<--");
-	private Button compareButton = new Button("compareButton");
+	private ImageButton leftedit = new ImageButton("../images/W.png", "../images/W.png");
+	private ImageButton leftload = new ImageButton("../images/load_1.png", "../images/load_2.png");
+	private ImageButton leftsave = new ImageButton("../images/save_1.png", "../images/save_2.png");
+	private ImageButton rightedit = new ImageButton("../images/W.png", "../images/W.png");
+	private ImageButton rightload = new ImageButton("../images/load_1.png", "../images/load_2.png");
+	private ImageButton rightsave = new ImageButton("../images/save_1.png", "../images/save_2.png");
+	private ImageButton copyToleft = new ImageButton("../images/lf.png", "../images/lf_2.png");
+	private ImageButton copyToRight = new ImageButton("../images/rt.png", "../images/rt_2.png");
+	private ImageButton compareButton = new ImageButton("../images/comapre.png", "../images/comapre_2.png");
+	private JButton exitButton = new JButton(new ImageIcon(main.class.getResource("../images/exitIcon_1.png")));
 	private JPanel rightText = new JPanel();
 	private JPanel leftText = new JPanel();
 	private static JTextPane rightPane = new JTextPane();
@@ -53,20 +58,36 @@ public class Hotdog extends JFrame {
 	private Frame fmd = new Frame();
 	private String tmpdir;
 	private String tmpdir2;
+	private int mouseX, mouseY;
 	Font cont = new Font("D2Coding", Font.ITALIC, main.FONT_SIZE);
-
+	
+	private Image screenImage;
+	private Graphics screenGraphic;
+	private Image background = new ImageIcon(main.class.getResource("../images/bg.png")).getImage();
+	private JLabel menuBar = new JLabel(new ImageIcon(main.class.getResource("../images/menubar.png")));
 	public Hotdog() {
-		setTitle("SImpleMerge");
+		setUndecorated(true);
+		setTitle("SimpleMerge");
 		InitLayout();
 
-		setSize(1280, 720);
+		setSize(1280, 750);
 		setVisible(true);
 		setResizable(false);
-
+		setBackground(new Color(0,0,0,0));
 		centerScreenSet();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-
+	public void paint(Graphics g) {
+		screenImage = createImage(main.SCREEN_WIDTH, main.SCREEN_HEIGHT);
+		screenGraphic = screenImage.getGraphics();
+		screenDraw(screenGraphic);
+		g.drawImage(screenImage, 0, 0, null);
+	}
+	public void screenDraw(Graphics g) {
+		g.drawImage(background, 0, 0, null);
+		paintComponents(g);
+		this.repaint();
+	}
 	public void centerScreenSet() {
 		frameSize = getSize();
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -75,7 +96,7 @@ public class Hotdog extends JFrame {
 
 	public void InitLayout() {
 		setLayout(null);
-
+		
 		rightPane.setEditable(false);
 		rightPane.setBackground(Color.gray);
 		leftPane.setEditable(false);
@@ -101,6 +122,27 @@ public class Hotdog extends JFrame {
 		TextLineNumber righttln = new TextLineNumber(rightPane);
 		rightScroll.setRowHeaderView(righttln);
 
+		menuBar.setBounds(0,0,1280,30);
+		menuBar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mouseX = e.getX();
+				mouseY = e.getY();
+			}
+		});
+		menuBar.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x - mouseX, y - mouseY);
+			}
+		});
+		
+		exitButton.setBounds(1245,0,30,30);
+		exitButton.setBorderPainted(false);
+		exitButton.setContentAreaFilled(false);
+		exitButton.setFocusPainted(false);
 		rightScroll.setBounds(700, 80, 450, 550);
 		leftScroll.setBounds(50, 80, 450, 550);
 		copyToleft.setBounds(550, 150, 100, 50);
@@ -305,10 +347,9 @@ public class Hotdog extends JFrame {
 
 			public void mousePressed(MouseEvent e) {
 				compare.compareCode();
-				highlight(leftPane);
 				ParagraphList.setJtextPaneParagraph(ParagraphList.leftParagraphList, leftPane);
 				ParagraphList.setJtextPaneParagraph(ParagraphList.rightParagraphList, rightPane);
-				
+				highlight(leftPane);
 			}
 		});
 		copyToRight.addMouseListener(new MouseAdapter() {
@@ -360,6 +401,8 @@ public class Hotdog extends JFrame {
 		add(rightScroll);
 		add(leftScroll);
 		add(compareButton);
+		add(exitButton);
+		add(menuBar);
 	}
 
 	public static String getLeftPanelText() {

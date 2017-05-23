@@ -12,8 +12,8 @@ class ImageButton extends JButton{
 	private ImageIcon modifyIcon;
 	
 	public ImageButton(String img1,String img2) {
-		this.defaultIcon = new ImageIcon(img1);
-		this.modifyIcon = new ImageIcon(img2);
+		this.defaultIcon = new ImageIcon(main.class.getResource(img1));
+		this.modifyIcon = new ImageIcon(main.class.getResource(img2));
 		setIcon(defaultIcon);
 		setRolloverIcon(modifyIcon);
 		setMargin(new Insets(0,0,0,0));
