@@ -37,16 +37,16 @@ import javax.swing.text.StyledDocument;
 
 public class Hotdog extends JFrame {
 
-	private ImageButton leftedit = new ImageButton("../images/W.png", "../images/W.png");
+	private ImageButton leftedit = new ImageButton("../images/W.png", "../images/W_2.png");
 	private ImageButton leftload = new ImageButton("../images/load_1.png", "../images/load_2.png");
 	private ImageButton leftsave = new ImageButton("../images/save_1.png", "../images/save_2.png");
-	private ImageButton rightedit = new ImageButton("../images/W.png", "../images/W.png");
+	private ImageButton rightedit = new ImageButton("../images/W.png", "../images/W_2.png");
 	private ImageButton rightload = new ImageButton("../images/load_1.png", "../images/load_2.png");
 	private ImageButton rightsave = new ImageButton("../images/save_1.png", "../images/save_2.png");
 	private ImageButton copyToleft = new ImageButton("../images/lf.png", "../images/lf_2.png");
 	private ImageButton copyToRight = new ImageButton("../images/rt.png", "../images/rt_2.png");
 	private ImageButton compareButton = new ImageButton("../images/comapre.png", "../images/comapre_2.png");
-	private JButton exitButton = new JButton(new ImageIcon(main.class.getResource("../images/exitIcon_1.png")));
+	private JButton exitButton = new JButton(new ImageIcon(Main.class.getResource("../images/exitIcon_1.png")));
 	private JPanel rightText = new JPanel();
 	private JPanel leftText = new JPanel();
 	private static JTextPane rightPane = new JTextPane();
@@ -59,12 +59,13 @@ public class Hotdog extends JFrame {
 	private String tmpdir;
 	private String tmpdir2;
 	private int mouseX, mouseY;
-	Font cont = new Font("D2Coding", Font.ITALIC, main.FONT_SIZE);
-	
+	Font cont = new Font("D2Coding", Font.ITALIC, Main.FONT_SIZE);
+
 	private Image screenImage;
 	private Graphics screenGraphic;
-	private Image background = new ImageIcon(main.class.getResource("../images/bg.png")).getImage();
-	private JLabel menuBar = new JLabel(new ImageIcon(main.class.getResource("../images/menubar.png")));
+	private Image background = new ImageIcon(Main.class.getResource("../images/bg.png")).getImage();
+	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menubar.png")));
+
 	public Hotdog() {
 		setUndecorated(true);
 		setTitle("SimpleMerge");
@@ -73,21 +74,24 @@ public class Hotdog extends JFrame {
 		setSize(1280, 750);
 		setVisible(true);
 		setResizable(false);
-		setBackground(new Color(0,0,0,0));
+		setBackground(new Color(0, 0, 0, 0));
 		centerScreenSet();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+
 	public void paint(Graphics g) {
-		screenImage = createImage(main.SCREEN_WIDTH, main.SCREEN_HEIGHT);
+		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
 		screenGraphic = screenImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(screenImage, 0, 0, null);
 	}
+
 	public void screenDraw(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 		paintComponents(g);
 		this.repaint();
 	}
+
 	public void centerScreenSet() {
 		frameSize = getSize();
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -96,7 +100,7 @@ public class Hotdog extends JFrame {
 
 	public void InitLayout() {
 		setLayout(null);
-		
+
 		rightPane.setEditable(false);
 		rightPane.setBackground(Color.gray);
 		leftPane.setEditable(false);
@@ -122,7 +126,7 @@ public class Hotdog extends JFrame {
 		TextLineNumber righttln = new TextLineNumber(rightPane);
 		rightScroll.setRowHeaderView(righttln);
 
-		menuBar.setBounds(0,0,1280,30);
+		menuBar.setBounds(0, 0, 1280, 30);
 		menuBar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -138,8 +142,8 @@ public class Hotdog extends JFrame {
 				setLocation(x - mouseX, y - mouseY);
 			}
 		});
-		
-		exitButton.setBounds(1245,0,30,30);
+
+		exitButton.setBounds(1245, 0, 30, 30);
 		exitButton.setBorderPainted(false);
 		exitButton.setContentAreaFilled(false);
 		exitButton.setFocusPainted(false);
@@ -216,8 +220,8 @@ public class Hotdog extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// 마우스 나갈시
-				leftEditText();
+				// 마우스 나갈시;
+				// isEditableText(leftedit);
 			}
 		});
 
@@ -237,11 +241,18 @@ public class Hotdog extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				try {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
-					leftPane.write(writer);
-					JOptionPane.showMessageDialog(fmd, "저장 성공");
-					writer.close();
+					if (tmpdir == null) {
+						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
+						dialog.setDirectory(".");
+						dialog.setVisible(true);
+					}
 
+					else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
+						leftPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "저장 성공");
+						writer.close();
+					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(fmd, "저장 실패");
 				}
@@ -321,11 +332,20 @@ public class Hotdog extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				try {
-					BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
-					rightPane.write(writer);
-					JOptionPane.showMessageDialog(fmd, "저장 성공");
-					writer.close();
+					if (tmpdir2 == null) {
+						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
+						dialog.setDirectory(".");
+						dialog.setVisible(true);
+						if (dialog.getFile() == null)
+							return;
+					}
 
+					else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
+						rightPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "저장 성공");
+						writer.close();
+					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(fmd, "저장 실패");
 				}
@@ -350,6 +370,7 @@ public class Hotdog extends JFrame {
 				ParagraphList.setJtextPaneParagraph(ParagraphList.leftParagraphList, leftPane);
 				ParagraphList.setJtextPaneParagraph(ParagraphList.rightParagraphList, rightPane);
 				highlight(leftPane);
+				highlight(rightPane);
 			}
 		});
 		copyToRight.addMouseListener(new MouseAdapter() {
@@ -388,6 +409,24 @@ public class Hotdog extends JFrame {
 				Merge.merge(leftPane, rightPane);
 			}
 		});
+		exitButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.exit(1);
+			}
+		});
 		add(leftload);
 		add(leftedit);
 		add(leftsave);
@@ -411,18 +450,6 @@ public class Hotdog extends JFrame {
 
 	public static String getRightPanelText() {
 		return rightPane.getText();
-	}
-
-	public void rightEditText() {
-		if (rightPane.isEditable() == false) {
-			rightPane.setEditable(true);
-			rightPane.setBackground(Color.darkGray);
-		} else {
-			rightPane.setEditable(false);
-			rightPane.setBackground(Color.gray);
-
-		}
-
 	}
 
 	public static void setJTextPaneFont(JTextPane jtp, Font font, Color c) {
@@ -453,13 +480,17 @@ public class Hotdog extends JFrame {
 		doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
 	}
 
+	public void shiftColor(DefaultHighlightPainter painter, int index) {
+
+	}
+
 	public void highlight(JTextPane t) {
 		Highlighter hilite = new MyHighlighter();
-		DefaultHighlightPainter whitePainter = new DefaultHighlighter.DefaultHighlightPainter(Color.MAGENTA);
+		DefaultHighlightPainter linePainter = new DefaultHighlighter.DefaultHighlightPainter(Color.red);
 
-		DefaultHighlightPainter painter = whitePainter;
+		DefaultHighlightPainter painter = linePainter;
 		t.setHighlighter(hilite);
-		
+
 		try {
 			Document doc = t.getDocument();
 			String text = doc.getText(0, doc.getLength());
@@ -482,16 +513,22 @@ public class Hotdog extends JFrame {
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
-	public void leftEditText() {
-		if (leftPane.isEditable() == false) {
-			leftPane.setEditable(true);
-			leftPane.setBackground(Color.darkGray);
+	public void rightEditText() {
+		if (rightPane.isEditable() == false) {
+			rightPane.setEditable(true);
+			rightPane.setBackground(Color.darkGray);
 		} else {
-			leftPane.setEditable(false);
-			leftPane.setBackground(Color.gray);
+			rightPane.setEditable(false);
+			rightPane.setBackground(Color.gray);
+
 		}
-	}
+
+	}/*
+		 * public void isEditableText(ImageButton jtp) { if (jtp.isEditable() ==
+		 * false) { jtp.setEditable(true); jtp.setBackground(Color.darkGray); }
+		 * else { jtp.setEditable(false); jtp.setBackground(Color.gray); } }
+		 */
 }

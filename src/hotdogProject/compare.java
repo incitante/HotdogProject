@@ -3,20 +3,10 @@ package hotdogProject;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.swing.JOptionPane;
 
 public class compare {
 
-	private ArrayList<String> inputText(ArrayList<String> List) {
-
-		return List;
-	}
-
-	private void setParagraph(Paragraph para, String text) {
-		// System.out.print(text.getText());
-	}
+	
 
 	public static void inputTextToArrayList(String srcText, ArrayList<String> dest) {
 		String temp;
@@ -156,17 +146,10 @@ public class compare {
 				Line++;
 			}
 		}
-		
-		ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
-		ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
-		
-		System.out.println("left");
-		for (i = 0; i <= t; i++) {
-			System.out.println(ParagraphList.leftParagraphList.get(i).startLine + " " + ParagraphList.leftParagraphList.get(i).endLine);
+		if(t!=-1){
+			ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+			ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
 		}
-		System.out.println("right");
-		for (i = 0; i <= t; i++) {
-			System.out.println(ParagraphList.rightParagraphList.get(i).startLine + " " + ParagraphList.rightParagraphList.get(i).endLine);
-		}
+	
 	}
 }

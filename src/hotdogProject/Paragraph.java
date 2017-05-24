@@ -2,7 +2,7 @@ package hotdogProject;
 
 import java.util.ArrayList;
 
-import javax.swing.JTextPane;
+
 
 public class Paragraph {
 	int startLine,endLine;
@@ -26,7 +26,7 @@ public class Paragraph {
 		for (int i = 0; i < para.seq.size(); i++) {
 			temp = temp + para.getSeq(i)+"\n";
 		}
-		//System.out.println(temp);
+		
 		return temp;
 	}
 }

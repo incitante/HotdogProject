@@ -31,6 +31,7 @@ import javax.swing.text.Utilities;
 
 public class TextLineNumber extends JPanel implements CaretListener,
 		DocumentListener, PropertyChangeListener {
+
 	public final static float LEFT = 0.0f;
 	public final static float CENTER = 0.5f;
 	public final static float RIGHT = 1.0f;
@@ -254,19 +255,19 @@ public class TextLineNumber extends JPanel implements CaretListener,
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
-		documentChanged();
+		//documentChanged();
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		documentChanged();
+		//documentChanged();
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
-		documentChanged();
+		//documentChanged();
 	}
-
+/*
 	private void documentChanged() {
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -286,7 +287,7 @@ public class TextLineNumber extends JPanel implements CaretListener,
 			}
 		});
 	}
-
+*/
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getNewValue() instanceof Font) {

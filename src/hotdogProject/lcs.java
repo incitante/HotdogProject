@@ -77,15 +77,7 @@ public class lcs {
 		}
 		lcsSize = leftLCS.size();
 		
-		System.out.println("left");
-		for(i = 0; i < lcsSize; i++) {
-			System.out.println(lcs.getLeftLCS(i));
-		}
 		
-		System.out.println("right");
-		for(i = 0; i < lcs.lcsSize; i++) {
-			System.out.println(lcs.getRightLCS(i));
-		}
 		
 	}
 }
