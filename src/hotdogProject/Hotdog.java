@@ -100,13 +100,15 @@ public class Hotdog extends JFrame {
 
 	public void InitLayout() {
 		setLayout(null);
-
+		/****************************************************************************************
+		 *                                     Pane&Text
+		 ***************************************************************************************/
 		rightPane.setEditable(false);
 		rightPane.setBackground(Color.gray);
+		rightPane.setSize(100000, 100000);
+
 		leftPane.setEditable(false);
 		leftPane.setBackground(Color.gray);
-
-		rightPane.setSize(100000, 100000);
 		leftPane.setSize(10000, 10000);
 
 		rightText.setLayout(new BorderLayout());
@@ -117,15 +119,24 @@ public class Hotdog extends JFrame {
 		leftText.add(leftPane);
 		leftText.setSize(100000, 100000);
 
+		/****************************************************************************************
+		 *                                     Scroll
+		 ***************************************************************************************/
 		rightScroll = new JScrollPane(rightText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		TextLineNumber righttln = new TextLineNumber(rightPane);
+		rightScroll.setRowHeaderView(righttln);
+		rightScroll.setBounds(700, 80, 450, 550);
+
 		leftScroll = new JScrollPane(leftText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		TextLineNumber lefttln = new TextLineNumber(leftPane);
 		leftScroll.setRowHeaderView(lefttln);
-		TextLineNumber righttln = new TextLineNumber(rightPane);
-		rightScroll.setRowHeaderView(righttln);
+		leftScroll.setBounds(50, 80, 450, 550);
 
+		/****************************************************************************************
+		 *                                     menuBar
+		 ***************************************************************************************/
 		menuBar.setBounds(0, 0, 1280, 30);
 		menuBar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -143,29 +154,176 @@ public class Hotdog extends JFrame {
 			}
 		});
 
+		/****************************************************************************************
+		 *                                    exitbutton
+		 ***************************************************************************************/
 		exitButton.setBounds(1245, 0, 30, 30);
 		exitButton.setBorderPainted(false);
 		exitButton.setContentAreaFilled(false);
 		exitButton.setFocusPainted(false);
-		rightScroll.setBounds(700, 80, 450, 550);
-		leftScroll.setBounds(50, 80, 450, 550);
+		exitButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.exit(1);
+			}
+		});
+
+		/****************************************************************************************
+		 *                                    mergebutton
+		 ***************************************************************************************/
 		copyToleft.setBounds(550, 150, 100, 50);
+		copyToleft.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Merge.merge(leftPane, rightPane);
+			}
+		});
 		copyToRight.setBounds(550, 350, 100, 50);
+		copyToRight.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				copyToRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				copyToRight.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Merge.merge(rightPane, leftPane);
+			}
+		});
+		/****************************************************************************************
+		 *                                    comparebutton
+		 ***************************************************************************************/
 		compareButton.setBounds(550, 250, 100, 50);
+		compareButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				compareButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
-		leftedit.setBounds(200, 20, 150, 40);
-		leftsave.setBounds(350, 20, 150, 40);
-		leftload.setBounds(50, 20, 150, 40);
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				compareButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
 
-		rightedit.setBounds(850, 20, 150, 40);
+			public void mousePressed(MouseEvent e) {
+				compare.compareCode();
+				ParagraphList.setJtextPaneParagraph(ParagraphList.leftParagraphList, leftPane);
+				ParagraphList.setJtextPaneParagraph(ParagraphList.rightParagraphList, rightPane);
+				ShowLine.highlight(leftPane);
+				ShowLine.highlight(rightPane);
+			}
+		});
+		/****************************************************************************************
+		 *                                    savebutton
+		 ***************************************************************************************/
 		rightsave.setBounds(1000, 20, 150, 40);
-		rightload.setBounds(700, 20, 150, 40);
-		ffd.setSize(300, 200);
-		fmd.setSize(100, 50);
-		setJTextPaneFont(leftPane, cont, Color.white);
-		setJTextPaneFont(rightPane, cont, Color.white);
-		leftPane.setCaretColor(Color.white);
-		rightPane.setCaretColor(Color.white);
+		rightsave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				rightsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				rightsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					if (tmpdir2 == null) {
+						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
+						dialog.setDirectory(".");
+						dialog.setVisible(true);
+						if (dialog.getFile() == null)
+							return;
+					}
+
+					else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
+						rightPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "저장 성공");
+						writer.close();
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(fmd, "저장 실패");
+				}
+			}
+		});
+		leftsave.setBounds(350, 20, 150, 40);
+		leftsave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				leftsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				leftsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				try {
+					if (tmpdir == null) {
+						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
+						dialog.setDirectory(".");
+						dialog.setVisible(true);
+					}
+
+					else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
+						leftPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "저장 성공");
+						writer.close();
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(fmd, "저장 실패");
+				}
+			}
+		});
+
+		/****************************************************************************************
+		 *                                    loadbutton
+		 ***************************************************************************************/
+		leftload.setBounds(50, 20, 150, 40);
 		leftload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -204,61 +362,7 @@ public class Hotdog extends JFrame {
 				}
 			}
 		});
-
-		leftedit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// 마우스 나갈시;
-				// isEditableText(leftedit);
-			}
-		});
-
-		leftsave.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				leftsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				leftsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				try {
-					if (tmpdir == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-					}
-
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
-						leftPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "저장 성공");
-						writer.close();
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "저장 실패");
-				}
-			}
-		});
-
+		rightload.setBounds(700, 20, 150, 40);
 		rightload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -296,7 +400,30 @@ public class Hotdog extends JFrame {
 				}
 			}
 		});
+		/****************************************************************************************
+		 *                                    editbutton
+		 ***************************************************************************************/
+		leftedit.setBounds(200, 20, 150, 40);
+		leftedit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 마우스 진입시
+				leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 마우스 나갈시
+				leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// 마우스 클릭시;
+				isEditableText(leftPane);
+			}
+		});
+		rightedit.setBounds(850, 20, 150, 40);
 		rightedit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -312,121 +439,20 @@ public class Hotdog extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				rightEditText();
+				isEditableText(rightPane);
 			}
 		});
 
-		rightsave.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				rightsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
+		ffd.setSize(300, 200);
+		fmd.setSize(100, 50);
+		/****************************************************************************************
+		 *                                    Caret & Font
+		 ***************************************************************************************/
+		setJTextPaneFont(leftPane, cont, Color.white);
+		setJTextPaneFont(rightPane, cont, Color.white);
+		leftPane.setCaretColor(Color.white);
+		rightPane.setCaretColor(Color.white);
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				rightsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				try {
-					if (tmpdir2 == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-						if (dialog.getFile() == null)
-							return;
-					}
-
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
-						rightPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "저장 성공");
-						writer.close();
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "저장 실패");
-				}
-			}
-		});
-
-		compareButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				compareButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				compareButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(MouseEvent e) {
-				compare.compareCode();
-				ParagraphList.setJtextPaneParagraph(ParagraphList.leftParagraphList, leftPane);
-				ParagraphList.setJtextPaneParagraph(ParagraphList.rightParagraphList, rightPane);
-				highlight(leftPane);
-				highlight(rightPane);
-			}
-		});
-		copyToRight.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				copyToRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				copyToRight.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				Merge.merge(rightPane, leftPane);
-			}
-		});
-		copyToleft.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				Merge.merge(leftPane, rightPane);
-			}
-		});
-		exitButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 마우스 진입시
-				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// 마우스 나갈시
-				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.exit(1);
-			}
-		});
 		add(leftload);
 		add(leftedit);
 		add(leftsave);
@@ -480,55 +506,16 @@ public class Hotdog extends JFrame {
 		doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
 	}
 
-	public void shiftColor(DefaultHighlightPainter painter, int index) {
+	
 
-	}
-
-	public void highlight(JTextPane t) {
-		Highlighter hilite = new MyHighlighter();
-		DefaultHighlightPainter linePainter = new DefaultHighlighter.DefaultHighlightPainter(Color.red);
-
-		DefaultHighlightPainter painter = linePainter;
-		t.setHighlighter(hilite);
-
-		try {
-			Document doc = t.getDocument();
-			String text = doc.getText(0, doc.getLength());
-			int start = 0;
-			int end = 0;
-			int position = 0;
-			int i = 0;
-
-			while ((end = text.indexOf('\n', start)) >= 0) {
-				if (position >= ParagraphList.leftParagraphList.get(i).startLine
-						&& position <= ParagraphList.leftParagraphList.get(i).endLine
-						&& !ParagraphList.leftParagraphList.get(i).isLCS) {
-					hilite.addHighlight(start, end + 1, painter);
-				}
-				if (position == ParagraphList.leftParagraphList.get(i).endLine)
-					i++;
-				start = end + 1;
-				position++;
-			}
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void rightEditText() {
-		if (rightPane.isEditable() == false) {
-			rightPane.setEditable(true);
-			rightPane.setBackground(Color.darkGray);
+	public void isEditableText(JTextPane jtp) {
+		if (jtp.isEditable() == false) {
+			jtp.setEditable(true);
+			jtp.setBackground(Color.darkGray);
 		} else {
-			rightPane.setEditable(false);
-			rightPane.setBackground(Color.gray);
-
+			jtp.setEditable(false);
+			jtp.setBackground(Color.gray);
 		}
+	}
 
-	}/*
-		 * public void isEditableText(ImageButton jtp) { if (jtp.isEditable() ==
-		 * false) { jtp.setEditable(true); jtp.setBackground(Color.darkGray); }
-		 * else { jtp.setEditable(false); jtp.setBackground(Color.gray); } }
-		 */
 }
