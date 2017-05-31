@@ -15,11 +15,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -101,7 +103,7 @@ public class Hotdog extends JFrame {
 	public void InitLayout() {
 		setLayout(null);
 		/****************************************************************************************
-		 *                                     Pane&Text
+		 * Pane&Text
 		 ***************************************************************************************/
 		rightPane.setEditable(false);
 		rightPane.setBackground(Color.gray);
@@ -120,7 +122,7 @@ public class Hotdog extends JFrame {
 		leftText.setSize(100000, 100000);
 
 		/****************************************************************************************
-		 *                                     Scroll
+		 * Scroll
 		 ***************************************************************************************/
 		rightScroll = new JScrollPane(rightText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -135,7 +137,7 @@ public class Hotdog extends JFrame {
 		leftScroll.setBounds(50, 80, 450, 550);
 
 		/****************************************************************************************
-		 *                                     menuBar
+		 * menuBar
 		 ***************************************************************************************/
 		menuBar.setBounds(0, 0, 1280, 30);
 		menuBar.addMouseListener(new MouseAdapter() {
@@ -155,7 +157,7 @@ public class Hotdog extends JFrame {
 		});
 
 		/****************************************************************************************
-		 *                                    exitbutton
+		 * exitbutton
 		 ***************************************************************************************/
 		exitButton.setBounds(1245, 0, 30, 30);
 		exitButton.setBorderPainted(false);
@@ -164,14 +166,14 @@ public class Hotdog extends JFrame {
 		exitButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
-				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
+				exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
-				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
@@ -181,19 +183,19 @@ public class Hotdog extends JFrame {
 		});
 
 		/****************************************************************************************
-		 *                                    mergebutton
+		 * mergebutton
 		 ***************************************************************************************/
 		copyToleft.setBounds(550, 150, 100, 50);
 		copyToleft.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				copyToleft.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				copyToleft.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -206,13 +208,13 @@ public class Hotdog extends JFrame {
 		copyToRight.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				copyToRight.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				copyToRight.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -222,19 +224,19 @@ public class Hotdog extends JFrame {
 			}
 		});
 		/****************************************************************************************
-		 *                                    comparebutton
+		 * comparebutton
 		 ***************************************************************************************/
 		compareButton.setBounds(550, 250, 100, 50);
 		compareButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				compareButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				compareButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -247,93 +249,119 @@ public class Hotdog extends JFrame {
 			}
 		});
 		/****************************************************************************************
-		 *                                    savebutton
+		 * savebutton
 		 ***************************************************************************************/
 		rightsave.setBounds(1000, 20, 150, 40);
 		rightsave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
 				rightsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
 				rightsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				File file = null;
 				try {
 					if (tmpdir2 == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-						if (dialog.getFile() == null)
-							return;
-					}
+						JFileChooser fc = new JFileChooser();
+						fc.setDialogTitle("Browser for save");
 
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
+						int returnVal = fc.showOpenDialog(null);
+
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							file = fc.getSelectedFile();
+						}
+						BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 						rightPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "ÀúÀå ¼º°ø");
+						JOptionPane.showMessageDialog(fmd, "save success");
+						writer.close();
+					} else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+						rightPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "save success");
 						writer.close();
 					}
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "ÀúÀå ½ÇÆÐ");
+					JOptionPane.showMessageDialog(fmd, "save failed");
 				}
+				/*
+				 * try { if (tmpdir2 == null) { File f = new File(); FileDialog
+				 * dialog = new FileDialog(ffd, "Browser for Save",
+				 * FileDialog.SAVE); dialog.setDirectory(".");
+				 * dialog.setVisible(true); if (dialog.getFile() == null)
+				 * return; }
+				 * 
+				 * else { BufferedWriter writer = new BufferedWriter(new
+				 * FileWriter(tmpdir2)); rightPane.write(writer);
+				 * JOptionPane.showMessageDialog(fmd, ""); writer.close(); } }
+				 * catch (Exception e2) { JOptionPane.showMessageDialog(fmd,
+				 * "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"); }
+				 */
 			}
 		});
 		leftsave.setBounds(350, 20, 150, 40);
 		leftsave.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				leftsave.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				leftsave.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				File file = null;
 				try {
 					if (tmpdir == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-					}
+						JFileChooser fc = new JFileChooser();
+						fc.setDialogTitle("Browser for save");
 
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
-						leftPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "ÀúÀå ¼º°ø");
+						int returnVal = fc.showOpenDialog(null);
+
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							file = fc.getSelectedFile();
+						}
+						BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+						rightPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "save success");
+						writer.close();
+					} else {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+						rightPane.write(writer);
+						JOptionPane.showMessageDialog(fmd, "save success");
 						writer.close();
 					}
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "ÀúÀå ½ÇÆÐ");
+					JOptionPane.showMessageDialog(fmd, "save failed");
 				}
 			}
 		});
 
 		/****************************************************************************************
-		 *                                    loadbutton
+		 * loadbutton
 		 ***************************************************************************************/
 		leftload.setBounds(50, 20, 150, 40);
 		leftload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				leftload.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				leftload.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -358,7 +386,7 @@ public class Hotdog extends JFrame {
 					reader.close();
 
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "·Îµù ½ÇÆÐ");
+					JOptionPane.showMessageDialog(fmd, "ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
 				}
 			}
 		});
@@ -366,13 +394,13 @@ public class Hotdog extends JFrame {
 		rightload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				rightload.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				rightload.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -396,30 +424,30 @@ public class Hotdog extends JFrame {
 					reader.close();
 
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "·Îµù ½ÇÆÐ");
+					JOptionPane.showMessageDialog(fmd, "ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
 				}
 			}
 		});
 		/****************************************************************************************
-		 *                                    editbutton
+		 * editbutton
 		 ***************************************************************************************/
 		leftedit.setBounds(200, 20, 150, 40);
 		leftedit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				leftedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				leftedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// ¸¶¿ì½º Å¬¸¯½Ã;
+				// ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½ï¿½ï¿½;
 				isEditableText(leftPane);
 			}
 		});
@@ -427,13 +455,13 @@ public class Hotdog extends JFrame {
 		rightedit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// ¸¶¿ì½º ÁøÀÔ½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½Ô½ï¿½
 				rightedit.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// ¸¶¿ì½º ³ª°¥½Ã
+				// ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				rightedit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
@@ -446,7 +474,7 @@ public class Hotdog extends JFrame {
 		ffd.setSize(300, 200);
 		fmd.setSize(100, 50);
 		/****************************************************************************************
-		 *                                    Caret & Font
+		 * Caret & Font
 		 ***************************************************************************************/
 		setJTextPaneFont(leftPane, cont, Color.white);
 		setJTextPaneFont(rightPane, cont, Color.white);
@@ -505,8 +533,6 @@ public class Hotdog extends JFrame {
 		// document uses the attributes.
 		doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
 	}
-
-	
 
 	public void isEditableText(JTextPane jtp) {
 		if (jtp.isEditable() == false) {
