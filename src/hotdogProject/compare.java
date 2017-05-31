@@ -34,20 +34,20 @@ public class compare {
 		inputTextToArrayList(Hotdog.getLeftPanelText(),left);
 		inputTextToArrayList(Hotdog.getRightPanelText(),right);
 
-		lcs.findLcs(left, right);
+		Lcs.findLcs(left, right);
 
 		k = i = j = Line = 0;
 		t = -1;
 		sw = -1;
 
-		limitK = lcs.getLcsSize();
+		limitK = Lcs.getLcsSize();
 		limitI = left.size();
 		limitJ = right.size();
 		
 		ParagraphList.clear();
 
 		while (k < limitK) {
-			if (lcs.getLeftLCS(k) == i && lcs.getRightLCS(k) == j) {
+			if (Lcs.getLeftLCS(k) == i && Lcs.getRightLCS(k) == j) {
 				if (sw != 0) {
 					if(t != -1) {
 						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
@@ -67,7 +67,27 @@ public class compare {
 				k++;
 				i++;
 				j++;
-			} else if (lcs.getLeftLCS(k) == i && lcs.getRightLCS(k) != j) {
+			} else if (Lcs.getLeftLCS(k) != i && Lcs.getRightLCS(k) != j) {
+				if (sw != 1) {
+					if(t != -1) {
+						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
+						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
+					}
+					sw = 1;
+					t++;
+					ParagraphList.leftParagraphList.add(new Paragraph());
+					ParagraphList.rightParagraphList.add(new Paragraph());
+					ParagraphList.leftParagraphList.get(t).startLine = Line;
+					ParagraphList.rightParagraphList.get(t).startLine = Line;
+					ParagraphList.leftParagraphList.get(t).isLCS = false;
+					ParagraphList.rightParagraphList.get(t).isLCS = false;
+				}
+				ParagraphList.leftParagraphList.get(t).setSeq(left.get(i));
+				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
+				i++;
+				j++;
+				
+			} else if (Lcs.getLeftLCS(k) == i && Lcs.getRightLCS(k) != j) {
 				if (sw != 1) {
 					if(t != -1) {
 						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
@@ -86,12 +106,12 @@ public class compare {
 				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
 				j++;
 			} else {
-				if (sw != 2) {
+				if (sw != 1) {
 					if(t != -1) {
 						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
 						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
 					}
-					sw = 2;
+					sw = 1;
 					t++;
 					ParagraphList.leftParagraphList.add(new Paragraph());
 					ParagraphList.rightParagraphList.add(new Paragraph());
