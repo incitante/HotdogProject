@@ -10,6 +10,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -29,8 +31,6 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
-import javax.swing.text.Document;
-import javax.swing.text.Highlighter;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -47,6 +47,7 @@ public class Hotdog extends JFrame {
 	private ImageButton copyToRight = new ImageButton("../images/rt.png", "../images/rt_2.png");
 	private ImageButton compareButton = new ImageButton("../images/comapre.png", "../images/comapre_2.png");
 	private JButton exitButton = new JButton(new ImageIcon(Main.class.getResource("../images/exitIcon_1.png")));
+	private JLabel hd = new JLabel(new ImageIcon(Main.class.getResource("../images/hd.png")));
 	private JPanel rightText = new JPanel();
 	private JPanel leftText = new JPanel();
 	private static JTextPane rightPane = new JTextPane();
@@ -60,6 +61,8 @@ public class Hotdog extends JFrame {
 	private String tmpdir2;
 	private int mouseX, mouseY;
 	Font cont = new Font("D2Coding", Font.ITALIC, Main.FONT_SIZE);
+	private JLabel rightField = new JLabel(new ImageIcon(Main.class.getResource("../images/screen.png")));
+	private JLabel leftField = new JLabel(new ImageIcon(Main.class.getResource("../images/screen.png")));
 
 	private Image screenImage;
 	private Graphics screenGraphic;
@@ -101,7 +104,7 @@ public class Hotdog extends JFrame {
 	public void InitLayout() {
 		setLayout(null);
 		/****************************************************************************************
-		 *                                     Pane&Text
+		 * Pane&Text
 		 ***************************************************************************************/
 		rightPane.setEditable(false);
 		rightPane.setBackground(Color.gray);
@@ -120,22 +123,22 @@ public class Hotdog extends JFrame {
 		leftText.setSize(100000, 100000);
 
 		/****************************************************************************************
-		 *                                     Scroll
+		 * Scroll
 		 ***************************************************************************************/
 		rightScroll = new JScrollPane(rightText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		TextLineNumber righttln = new TextLineNumber(rightPane);
 		rightScroll.setRowHeaderView(righttln);
-		rightScroll.setBounds(700, 80, 450, 550);
+		rightScroll.setBounds(620, 41, 445, 660);
 
 		leftScroll = new JScrollPane(leftText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		TextLineNumber lefttln = new TextLineNumber(leftPane);
 		leftScroll.setRowHeaderView(lefttln);
-		leftScroll.setBounds(50, 80, 450, 550);
+		leftScroll.setBounds(86, 41, 445, 660);
 
 		/****************************************************************************************
-		 *                                     menuBar
+		 * menuBar
 		 ***************************************************************************************/
 		menuBar.setBounds(0, 0, 1280, 30);
 		menuBar.addMouseListener(new MouseAdapter() {
@@ -155,7 +158,7 @@ public class Hotdog extends JFrame {
 		});
 
 		/****************************************************************************************
-		 *                                    exitbutton
+		 * exitbutton
 		 ***************************************************************************************/
 		exitButton.setBounds(1245, 0, 30, 30);
 		exitButton.setBorderPainted(false);
@@ -181,9 +184,38 @@ public class Hotdog extends JFrame {
 		});
 
 		/****************************************************************************************
-		 *                                    mergebutton
+		 * mergebutton
 		 ***************************************************************************************/
-		copyToleft.setBounds(550, 150, 100, 50);
+		leftPane.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				copyToRight.setEnabled(false);
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				copyToRight.setEnabled(true);
+			}
+		});
+		rightPane.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				copyToleft.setEnabled(false);
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				copyToleft.setEnabled(true);
+			}
+		});
+		copyToleft.setBounds(1200, 240, 42, 27);
+		copyToleft.setEnabled(false);
 		copyToleft.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -202,7 +234,8 @@ public class Hotdog extends JFrame {
 				Merge.merge(leftPane, rightPane);
 			}
 		});
-		copyToRight.setBounds(550, 350, 100, 50);
+		copyToRight.setBounds(1200, 210, 42, 27);
+		copyToRight.setEnabled(false);
 		copyToRight.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -222,9 +255,9 @@ public class Hotdog extends JFrame {
 			}
 		});
 		/****************************************************************************************
-		 *                                    comparebutton
+		 * comparebutton
 		 ***************************************************************************************/
-		compareButton.setBounds(550, 250, 100, 50);
+		compareButton.setBounds(1100, 210, 96, 61);
 		compareButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -247,9 +280,9 @@ public class Hotdog extends JFrame {
 			}
 		});
 		/****************************************************************************************
-		 *                                    savebutton
+		 * savebutton
 		 ***************************************************************************************/
-		rightsave.setBounds(1000, 20, 150, 40);
+		rightsave.setBounds(562, 540, 36, 38);
 		rightsave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -265,27 +298,10 @@ public class Hotdog extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				try {
-					if (tmpdir2 == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-						if (dialog.getFile() == null)
-							return;
-					}
-
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir2));
-						rightPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "저장 성공");
-						writer.close();
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "저장 실패");
-				}
+				new Save(rightPane, tmpdir2);
 			}
 		});
-		leftsave.setBounds(350, 20, 150, 40);
+		leftsave.setBounds(29, 540, 36, 38);
 		leftsave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -301,29 +317,14 @@ public class Hotdog extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				try {
-					if (tmpdir == null) {
-						FileDialog dialog = new FileDialog(ffd, "Browser for Save", FileDialog.SAVE);
-						dialog.setDirectory(".");
-						dialog.setVisible(true);
-					}
-
-					else {
-						BufferedWriter writer = new BufferedWriter(new FileWriter(tmpdir));
-						leftPane.write(writer);
-						JOptionPane.showMessageDialog(fmd, "저장 성공");
-						writer.close();
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "저장 실패");
-				}
+				new Save(leftPane, tmpdir);
 			}
 		});
 
 		/****************************************************************************************
-		 *                                    loadbutton
+		 * loadbutton
 		 ***************************************************************************************/
-		leftload.setBounds(50, 20, 150, 40);
+		leftload.setBounds(29, 600, 36, 38);
 		leftload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -339,30 +340,11 @@ public class Hotdog extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				FileDialog dialog = new FileDialog(ffd, "Browser for Load", FileDialog.LOAD);
-				dialog.setDirectory(".");
-				dialog.setVisible(true);
-
-				if (dialog.getFile() == null)
-					return;
-
-				String dfName = dialog.getDirectory() + dialog.getFile();
-				tmpdir = dfName;
-
-				try {
-					BufferedReader reader = new BufferedReader(new FileReader(tmpdir));
-					leftPane.setText("");
-					do {
-						leftPane.read(reader, null);
-					} while (reader.readLine() != null);
-					reader.close();
-
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "로딩 실패");
-				}
+				Load loadFileToRight = new Load(leftPane);
+				tmpdir = loadFileToRight.getFileName();
 			}
 		});
-		rightload.setBounds(700, 20, 150, 40);
+		rightload.setBounds(562, 600, 36, 38);
 		rightload.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -377,33 +359,14 @@ public class Hotdog extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				FileDialog dialog = new FileDialog(ffd, "Browser for Load", FileDialog.LOAD);
-				dialog.setDirectory(".");
-				dialog.setVisible(true);
-
-				if (dialog.getFile() == null)
-					return;
-
-				String dfName2 = dialog.getDirectory() + dialog.getFile();
-				tmpdir2 = dfName2;
-
-				try {
-					BufferedReader reader = new BufferedReader(new FileReader(tmpdir2));
-					rightPane.setText("");
-					do {
-						rightPane.read(reader, null);
-					} while (reader.readLine() != null);
-					reader.close();
-
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(fmd, "로딩 실패");
-				}
-			}
+				Load loadFileToRight = new Load(rightPane);
+				tmpdir2 = loadFileToRight.getFileName();
+						}
 		});
 		/****************************************************************************************
-		 *                                    editbutton
+		 * editbutton
 		 ***************************************************************************************/
-		leftedit.setBounds(200, 20, 150, 40);
+		leftedit.setBounds(29, 660, 36, 38);
 		leftedit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -423,7 +386,7 @@ public class Hotdog extends JFrame {
 				isEditableText(leftPane);
 			}
 		});
-		rightedit.setBounds(850, 20, 150, 40);
+		rightedit.setBounds(562, 660, 36, 38);
 		rightedit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -442,24 +405,30 @@ public class Hotdog extends JFrame {
 				isEditableText(rightPane);
 			}
 		});
+		leftField.setBounds(13, 25, 524, 690);
+		rightField.setBounds(546, 25, 524, 690);
 
 		ffd.setSize(300, 200);
 		fmd.setSize(100, 50);
 		/****************************************************************************************
-		 *                                    Caret & Font
+		 * Caret & Font
 		 ***************************************************************************************/
 		setJTextPaneFont(leftPane, cont, Color.white);
 		setJTextPaneFont(rightPane, cont, Color.white);
 		leftPane.setCaretColor(Color.white);
 		rightPane.setCaretColor(Color.white);
 
+		hd.setBounds(1100, 550, 129, 127);
+		
+		
 		add(leftload);
 		add(leftedit);
 		add(leftsave);
-
+		add(hd);
 		add(rightload);
 		add(rightedit);
 		add(rightsave);
+
 
 		add(copyToleft);
 		add(copyToRight);
@@ -468,6 +437,9 @@ public class Hotdog extends JFrame {
 		add(compareButton);
 		add(exitButton);
 		add(menuBar);
+		add(leftField);
+		add(rightField);
+
 	}
 
 	public static String getLeftPanelText() {
@@ -505,8 +477,6 @@ public class Hotdog extends JFrame {
 		// document uses the attributes.
 		doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
 	}
-
-	
 
 	public void isEditableText(JTextPane jtp) {
 		if (jtp.isEditable() == false) {

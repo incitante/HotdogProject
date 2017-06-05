@@ -67,26 +67,6 @@ public class compare {
 				k++;
 				i++;
 				j++;
-			} else if (Lcs.getLeftLCS(k) != i && Lcs.getRightLCS(k) != j) {
-				if (sw != 1) {
-					if(t != -1) {
-						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
-						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
-					}
-					sw = 1;
-					t++;
-					ParagraphList.leftParagraphList.add(new Paragraph());
-					ParagraphList.rightParagraphList.add(new Paragraph());
-					ParagraphList.leftParagraphList.get(t).startLine = Line;
-					ParagraphList.rightParagraphList.get(t).startLine = Line;
-					ParagraphList.leftParagraphList.get(t).isLCS = false;
-					ParagraphList.rightParagraphList.get(t).isLCS = false;
-				}
-				ParagraphList.leftParagraphList.get(t).setSeq(left.get(i));
-				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
-				i++;
-				j++;
-				
 			} else if (Lcs.getLeftLCS(k) == i && Lcs.getRightLCS(k) != j) {
 				if (sw != 1) {
 					if(t != -1) {
@@ -106,12 +86,12 @@ public class compare {
 				ParagraphList.rightParagraphList.get(t).setSeq(right.get(j));
 				j++;
 			} else {
-				if (sw != 1) {
+				if (sw != 2) {
 					if(t != -1) {
 						ParagraphList.leftParagraphList.get(t).endLine = Line - 1;
 						ParagraphList.rightParagraphList.get(t).endLine = Line - 1;
 					}
-					sw = 1;
+					sw = 2;
 					t++;
 					ParagraphList.leftParagraphList.add(new Paragraph());
 					ParagraphList.rightParagraphList.add(new Paragraph());
