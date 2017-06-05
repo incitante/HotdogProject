@@ -20,7 +20,14 @@ public class ShowLine {
 
 		return color[i];
 	}
-
+	public static void highlightRemove(JTextPane t) {
+		Highlighter hilite = new MyHighlighter();
+		t.setHighlighter(hilite);
+		hilite.removeAllHighlights();
+	}
+	
+	
+	
 	public static void highlight(JTextPane t) {
 		Highlighter hilite = new MyHighlighter();
 

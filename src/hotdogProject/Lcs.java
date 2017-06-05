@@ -3,7 +3,7 @@ package hotdogProject;
 import java.util.ArrayList;
 
 
-public class lcs {
+public class Lcs {
 	private static int[][] D; 
 	private static int[][] via;//0=diagonal 1=left 2=up
 	private static ArrayList<Integer> leftLCS = new ArrayList<Integer>();
@@ -63,8 +63,8 @@ public class lcs {
 		j--;
 		while(i!=0 && j!=0){
 			if(via[i][j] == 0){
-				lcs.setLeftLCS(i-1);
-				lcs.setRightLCS(j-1);
+				Lcs.setLeftLCS(i-1);
+				Lcs.setRightLCS(j-1);
 				i--;j--;
 			}
 			else if(via[i][j] == 1){
